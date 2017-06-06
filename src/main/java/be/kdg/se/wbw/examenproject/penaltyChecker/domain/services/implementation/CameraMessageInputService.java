@@ -10,8 +10,10 @@ import be.kdg.se.wbw.examenproject.penaltyChecker.shared.api.TypeMapper;
 import be.kdg.se.wbw.examenproject.penaltyChecker.shared.dto.CameraMessageDto;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
-public class CameraMessageInputService implements Subscriber {
+@Component
+public class CameraMessageInputService implements Subscriber<CameraMessageDto> {
     private static final Logger logger = Logger.getLogger(CameraMessageInputService.class);
     private TypeMapper<CameraMessageDto, CameraMessage> mapper;
     private EventDispatcherService eventDispatcherService;

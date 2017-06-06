@@ -8,4 +8,6 @@ import java.time.LocalDateTime;
 public interface Event<T> {
     public T getEventDetails();
     public LocalDateTime getTimeStamp();
+    void addEvent(Event e);
+    Event getInnerEvent();
 }

@@ -1,18 +1,19 @@
-package be.kdg.se.wbw.examenproject.penaltyChecker.domain.events;
+package be.kdg.se.wbw.examenproject.penaltyChecker.domain.services.implementation;
 
 import be.kdg.se.wbw.examenproject.penaltyChecker.domain.events.base.Event;
+import be.kdg.se.wbw.examenproject.penaltyChecker.domain.models.CameraMessage;
 import be.kdg.se.wbw.examenproject.penaltyChecker.domain.models.cameraDetail.CameraDetail;
 
 import java.time.LocalDateTime;
 
-public class CameraDetailsFoundEvent implements Event<CameraDetail> {
+public class GetDetailsForSpeedCheckEvent implements Event<CameraDetail> {
     private CameraDetail eventBody;
     private LocalDateTime timestamp;
     private Event innerEvent;
 
-    public CameraDetailsFoundEvent(CameraDetail eventBody) {
-        this.eventBody = eventBody;
-        this.timestamp = LocalDateTime.now();
+    public GetDetailsForSpeedCheckEvent(CameraDetail detail) {
+        eventBody = detail;
+        timestamp = LocalDateTime.now();
     }
 
     @Override

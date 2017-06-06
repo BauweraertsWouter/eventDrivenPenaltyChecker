@@ -7,6 +7,7 @@ import java.time.LocalDateTime;
 public class ExceptionOccuredEvent implements Event<Exception> {
     private Exception eventBody;
     private LocalDateTime timestamp;
+    private Event innerEvent;
 
     public ExceptionOccuredEvent(Exception eventBody) {
         this.eventBody = eventBody;
@@ -21,5 +22,10 @@ public class ExceptionOccuredEvent implements Event<Exception> {
     @Override
     public LocalDateTime getTimeStamp() {
         return timestamp;
+    }
+
+    @Override
+    public void addEvent(Event e) {
+        innerEvent = e;
     }
 }

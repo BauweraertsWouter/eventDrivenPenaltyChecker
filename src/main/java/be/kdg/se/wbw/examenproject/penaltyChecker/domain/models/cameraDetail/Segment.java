@@ -1,4 +1,4 @@
-package be.kdg.se.wbw.examenproject.penaltyChecker.domain.models;
+package be.kdg.se.wbw.examenproject.penaltyChecker.domain.models.cameraDetail;
 
 public class Segment {
     private int connectedCameraId;

@@ -3,7 +3,7 @@ package be.kdg.se.wbw.examenproject.penaltyChecker.domain.services.implementatio
 import be.kdg.se.wbw.examenproject.penaltyChecker.domain.events.CameraDetailsFoundEvent;
 import be.kdg.se.wbw.examenproject.penaltyChecker.domain.events.ExceptionOccuredEvent;
 import be.kdg.se.wbw.examenproject.penaltyChecker.domain.events.base.Event;
-import be.kdg.se.wbw.examenproject.penaltyChecker.domain.models.CameraDetails;
+import be.kdg.se.wbw.examenproject.penaltyChecker.domain.models.cameraDetail.CameraDetail;
 import be.kdg.se.wbw.examenproject.penaltyChecker.domain.services.api.EventHandler;
 import org.junit.Before;
 import org.junit.Test;
@@ -39,7 +39,7 @@ public class EventDispatcherServiceImplTest {
 
     @Test
     public void dispatchEvent_givenViolationCreatedEvent_exceptionEventHandlerDoesNotGetNotified() throws Exception {
-        event = new CameraDetailsFoundEvent(new CameraDetails());
+        event = new CameraDetailsFoundEvent(new CameraDetail());
         when(exceptionEventHandler.canHandle(event.getClass())).thenReturn(false);
         dispatcherService.dispatchEvent(event);
         verify(exceptionEventHandler, never()).trigger(event);

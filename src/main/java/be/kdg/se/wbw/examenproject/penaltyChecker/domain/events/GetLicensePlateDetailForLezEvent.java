@@ -5,24 +5,24 @@ import be.kdg.se.wbw.examenproject.penaltyChecker.domain.models.cameraDetail.Cam
 
 import java.time.LocalDateTime;
 
-public class CameraDetailsFoundEvent implements Event<CameraDetail> {
-    private CameraDetail eventBody;
-    private LocalDateTime timestamp;
+public class GetLicensePlateDetailForLezEvent implements Event<CameraDetail> {
+    private CameraDetail cameraDetail;
     private Event innerEvent;
+    private LocalDateTime timeStamp;
 
-    public CameraDetailsFoundEvent(CameraDetail eventBody) {
-        this.eventBody = eventBody;
-        this.timestamp = LocalDateTime.now();
+    public GetLicensePlateDetailForLezEvent(CameraDetail detail) {
+        cameraDetail = detail;
+        timeStamp = LocalDateTime.now();
     }
 
     @Override
     public CameraDetail getEventDetails() {
-        return eventBody;
+        return cameraDetail;
     }
 
     @Override
     public LocalDateTime getTimeStamp() {
-        return timestamp;
+        return timeStamp;
     }
 
     @Override
