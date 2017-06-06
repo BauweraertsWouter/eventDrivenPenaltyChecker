@@ -1,23 +1,21 @@
 package be.kdg.se.wbw.examenproject.penaltyChecker.domain.events;
 
 import be.kdg.se.wbw.examenproject.penaltyChecker.domain.events.base.Event;
-import be.kdg.se.wbw.examenproject.penaltyChecker.domain.models.LicensePlateDetails;
-import be.kdg.se.wbw.examenproject.penaltyChecker.domain.models.PreviousCameraRequestMessage;
+import be.kdg.se.wbw.examenproject.penaltyChecker.domain.models.Violation;
 
 import java.time.LocalDateTime;
 
-
-public class LicensePlateDetailRetrievedEvent implements Event<LicensePlateDetails> {
-    private LicensePlateDetails eventBody;
+public class ViolationDetectedEvent implements Event<Violation> {
+    private Violation eventBody;
     private LocalDateTime timestamp;
 
-    public LicensePlateDetailRetrievedEvent(LicensePlateDetails eventBody) {
+    public ViolationDetectedEvent(Violation eventBody) {
         this.eventBody = eventBody;
         this.timestamp = LocalDateTime.now();
     }
 
     @Override
-    public LicensePlateDetails getEventDetails() {
+    public Violation getEventDetails() {
         return eventBody;
     }
 

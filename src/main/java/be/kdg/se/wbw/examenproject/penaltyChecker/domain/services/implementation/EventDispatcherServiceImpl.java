@@ -10,7 +10,7 @@ import java.util.Set;
 
 @Component
 public class EventDispatcherServiceImpl implements EventDispatcherService {
-    private Set<EventHandler<Event>> registeredHandlers;
+    private Set<EventHandler> registeredHandlers;
 
     public EventDispatcherServiceImpl() {
         this.registeredHandlers = new HashSet<>();
@@ -24,7 +24,7 @@ public class EventDispatcherServiceImpl implements EventDispatcherService {
     @Override
     public void dispatchEvent(Event event) {
         this.registeredHandlers.stream()
-                .filter(h->h.getHandledType().equals(event.getClass()))
+                .filter(h->h.canHandle(event.getClass()))
                 .forEach(h->h.trigger(event));
     }
 }
