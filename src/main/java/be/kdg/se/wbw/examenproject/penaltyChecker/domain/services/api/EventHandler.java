@@ -5,7 +5,10 @@ import be.kdg.se.wbw.examenproject.penaltyChecker.domain.events.base.Event;
 /**
  * Created by Wouter on 6/06/2017.
  */
-public interface Service<E extends Event> {
-    void fireEvent(E event);
-    void addEventDispatcher(EventDispatcherService dispatcher);
+public interface EventHandler<E extends Event> {
+    void trigger(Event event);
+    void subscribe(EventDispatcherService dispatcher);
+    int hashCode();
+
+    Class<E> getHandledType();
 }

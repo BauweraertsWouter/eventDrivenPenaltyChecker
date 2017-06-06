@@ -1,6 +1,6 @@
 package be.kdg.se.wbw.examenproject.penaltyChecker.domain.services.api;
 
-import be.kdg.se.wbw.examenproject.penaltyChecker.domain.events.Event;
+import be.kdg.se.wbw.examenproject.penaltyChecker.domain.events.base.Event;
 
 /**
  * Created by Wouter on 6/06/2017.
