@@ -28,4 +28,9 @@ public class ExceptionOccuredEvent implements Event<Exception> {
     public void addEvent(Event e) {
         innerEvent = e;
     }
+
+    @Override
+    public Event getInnerEvent() {
+        return innerEvent;
+    }
 }

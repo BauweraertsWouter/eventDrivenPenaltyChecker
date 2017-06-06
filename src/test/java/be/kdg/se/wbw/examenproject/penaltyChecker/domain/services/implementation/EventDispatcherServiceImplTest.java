@@ -11,6 +11,8 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import java.time.LocalDateTime;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
@@ -39,7 +41,7 @@ public class EventDispatcherServiceImplTest {
 
     @Test
     public void dispatchEvent_givenViolationCreatedEvent_exceptionEventHandlerDoesNotGetNotified() throws Exception {
-        event = new CameraDetailsFoundEvent(new CameraDetail());
+        event = new CameraDetailsFoundEvent(new CameraDetail(1, null, null, -1, LocalDateTime.now()));
         when(exceptionEventHandler.canHandle(event.getClass())).thenReturn(false);
         dispatcherService.dispatchEvent(event);
         verify(exceptionEventHandler, never()).trigger(event);
