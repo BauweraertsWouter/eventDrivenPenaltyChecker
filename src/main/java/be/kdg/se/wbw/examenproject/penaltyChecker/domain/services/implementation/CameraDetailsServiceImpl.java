@@ -83,8 +83,7 @@ public class CameraDetailsServiceImpl implements CameraDetailsService, EventHand
     }
 
     private CameraDetail getCameraDetail(CameraMessageReceivedEvent event) {
-        CameraMessageReceivedEvent myEvent = event;
-        CameraDetail detail = findCamera(myEvent.getEventDetails().getCameraId());
+        CameraDetail detail = findCamera(event.getEventDetails().getCameraId());
         setPossibleViolationType(detail);
         return detail;
     }

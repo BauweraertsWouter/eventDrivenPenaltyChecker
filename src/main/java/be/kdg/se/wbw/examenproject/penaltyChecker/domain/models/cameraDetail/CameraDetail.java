@@ -1,7 +1,5 @@
 package be.kdg.se.wbw.examenproject.penaltyChecker.domain.models.cameraDetail;
 
-import be.kdg.se.wbw.examenproject.penaltyChecker.domain.models.violation.ViolationType;
-
 import java.time.LocalDateTime;
 
 public class CameraDetail {

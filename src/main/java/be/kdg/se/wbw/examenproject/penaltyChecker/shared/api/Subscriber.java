@@ -1,7 +1,5 @@
 package be.kdg.se.wbw.examenproject.penaltyChecker.shared.api;
 
-import be.kdg.se.wbw.examenproject.penaltyChecker.shared.dto.CameraMessageDto;
-
 /**
  * The Subscriber can subscribe to a Publisher to get notified when a new CameraMessageDto is available.
  */
