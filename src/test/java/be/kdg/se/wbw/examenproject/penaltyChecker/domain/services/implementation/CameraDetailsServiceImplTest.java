@@ -3,6 +3,7 @@ package be.kdg.se.wbw.examenproject.penaltyChecker.domain.services.implementatio
 import be.kdg.se.wbw.examenproject.penaltyChecker.adapters.api.CameraDetailsServiceProxyAdapter;
 import be.kdg.se.wbw.examenproject.penaltyChecker.domain.events.CameraMessageReceivedEvent;
 import be.kdg.se.wbw.examenproject.penaltyChecker.domain.events.ExceptionOccuredEvent;
+import be.kdg.se.wbw.examenproject.penaltyChecker.domain.events.GetDetailsForSpeedCheckEvent;
 import be.kdg.se.wbw.examenproject.penaltyChecker.domain.events.GetLicensePlateDetailForLezEvent;
 import be.kdg.se.wbw.examenproject.penaltyChecker.domain.events.base.Event;
 import be.kdg.se.wbw.examenproject.penaltyChecker.domain.models.CameraMessage;
