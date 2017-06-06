@@ -66,7 +66,7 @@ public class CameraDetailsServiceImpl implements CameraDetailsService, EventHand
             e.addEvent(event);
             events.add(e);
         }
-        if (detail.isCheckLez()) {
+        if (detail.isCheckSpeed()) {
             Event e = new GetDetailsForSpeedCheckEvent(detail);
             e.addEvent(event);
             events.add(e);
