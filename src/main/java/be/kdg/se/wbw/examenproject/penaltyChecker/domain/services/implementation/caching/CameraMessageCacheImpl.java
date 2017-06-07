@@ -2,7 +2,6 @@ package be.kdg.se.wbw.examenproject.penaltyChecker.domain.services.implementatio
 
 import be.kdg.se.wbw.examenproject.penaltyChecker.domain.models.CameraMessage;
 import be.kdg.se.wbw.examenproject.penaltyChecker.domain.services.api.CameraMessageCache;
-import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -11,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class CameraMessageCacheImpl implements CameraMessageCache {
-    private List<CameraMessage> messageBuffer = Collections.synchronizedList(new ArrayList<>());
+    private final List<CameraMessage> messageBuffer = Collections.synchronizedList(new ArrayList<>());
     private int interval;
 
     @Override
@@ -20,7 +19,7 @@ public class CameraMessageCacheImpl implements CameraMessageCache {
                 .filter(m -> m.getCameraId() == cameraId)
                 .filter(m -> m.getLicensePlate().equals(licensePlate))
                 .findFirst();
-        message.ifPresent(cameraMessage -> messageBuffer.remove(cameraMessage));
+        message.ifPresent(messageBuffer::remove);
         return message;
     }
 
@@ -35,7 +34,7 @@ public class CameraMessageCacheImpl implements CameraMessageCache {
         LocalDateTime current = LocalDateTime.now().minusMinutes(interval);
         new ArrayList<>(messageBuffer).stream()
                 .filter(m -> m.getTimestamp().isBefore(current))
-                .forEach(m -> messageBuffer.remove(m));
+                .forEach(messageBuffer::remove);
     }
 
     @Override

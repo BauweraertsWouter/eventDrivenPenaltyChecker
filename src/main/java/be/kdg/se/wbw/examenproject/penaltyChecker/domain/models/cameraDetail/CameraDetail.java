@@ -3,11 +3,11 @@ package be.kdg.se.wbw.examenproject.penaltyChecker.domain.models.cameraDetail;
 import java.time.LocalDateTime;
 
 public class CameraDetail {
-    private int cameraId;
-    private Location location;
-    private Segment segment;
-    private int euroNorm;
-    private LocalDateTime retrievingTimestamp;
+    private final int cameraId;
+    private final Location location;
+    private final Segment segment;
+    private final int euroNorm;
+    private final LocalDateTime retrievingTimestamp;
     private boolean checkLez;
     private boolean checkSpeed;
 

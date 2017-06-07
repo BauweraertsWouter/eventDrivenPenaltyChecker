@@ -7,8 +7,8 @@ import java.time.LocalDateTime;
 
 
 public class SpeedViolationDetectedEvent implements Event<Violation>{
-    private Violation eventBody;
-    private LocalDateTime timestamp;
+    private final Violation eventBody;
+    private final LocalDateTime timestamp;
 
     public SpeedViolationDetectedEvent(Violation eventBody) {
         this.eventBody = eventBody;

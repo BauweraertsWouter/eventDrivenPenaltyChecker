@@ -6,8 +6,8 @@ import be.kdg.se.wbw.examenproject.penaltyChecker.domain.models.cameraDetail.Cam
 import java.time.LocalDateTime;
 
 public class CameraDetailsFoundEvent implements Event<CameraDetail> {
-    private CameraDetail eventBody;
-    private LocalDateTime timestamp;
+    private final CameraDetail eventBody;
+    private final LocalDateTime timestamp;
 
     public CameraDetailsFoundEvent(CameraDetail eventBody) {
         this.eventBody = eventBody;

@@ -1,7 +1,7 @@
 package be.kdg.se.wbw.examenproject.penaltyChecker.domain.services.implementation;
 
 import be.kdg.se.wbw.examenproject.penaltyChecker.domain.events.CameraMessageReceivedEvent;
-import be.kdg.se.wbw.examenproject.penaltyChecker.domain.events.ExceptionOccuredEvent;
+import be.kdg.se.wbw.examenproject.penaltyChecker.domain.events.ExceptionOccurredEvent;
 import be.kdg.se.wbw.examenproject.penaltyChecker.domain.models.CameraMessage;
 import be.kdg.se.wbw.examenproject.penaltyChecker.domain.services.api.EventDispatcherService;
 import be.kdg.se.wbw.examenproject.penaltyChecker.shared.api.TypeMapper;
@@ -59,10 +59,10 @@ public class CameraMessageInputServiceTest {
                 .withTimeStamp(Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant()))
                 .build();
 
-        when(mapper.map(dto)).thenThrow(new MappingException("blabla"));
+        when(mapper.map(dto)).thenThrow(new MappingException("random"));
 
         inputService.notify(dto);
-        verify(dispatcherService).dispatchEvent(any(ExceptionOccuredEvent.class));
+        verify(dispatcherService).dispatchEvent(any(ExceptionOccurredEvent.class));
     }
 
 }

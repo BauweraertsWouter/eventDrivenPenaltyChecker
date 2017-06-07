@@ -10,6 +10,7 @@ import be.kdg.se.wbw.examenproject.penaltyChecker.shared.dto.SegmentDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+@SuppressWarnings("SpringAutowiredFieldsWarningInspection")
 @Component
 public class CameraDetailDtoToCameraDetailMapperService implements TypeMapper<CameraDetailDto, CameraDetail> {
     @Autowired

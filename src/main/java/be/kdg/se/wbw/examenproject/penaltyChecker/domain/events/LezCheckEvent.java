@@ -6,8 +6,8 @@ import be.kdg.se.wbw.examenproject.penaltyChecker.domain.models.LezData;
 import java.time.LocalDateTime;
 
 public class LezCheckEvent implements Event<LezData> {
-    private LezData eventBody;
-    private LocalDateTime timestamp;
+    private final LezData eventBody;
+    private final LocalDateTime timestamp;
 
     public LezCheckEvent(LezData lezData) {
         eventBody = lezData;

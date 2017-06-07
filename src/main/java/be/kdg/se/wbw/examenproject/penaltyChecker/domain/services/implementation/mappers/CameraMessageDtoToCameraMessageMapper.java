@@ -12,7 +12,7 @@ import java.util.Date;
 
 @Component
 public class CameraMessageDtoToCameraMessageMapper implements TypeMapper<CameraMessageDto, CameraMessage> {
-    private TypeMapper<Date, LocalDateTime> dateToLocalDateTimeMapperService;
+    private final TypeMapper<Date, LocalDateTime> dateToLocalDateTimeMapperService;
 
     @Autowired
     public CameraMessageDtoToCameraMessageMapper(TypeMapper<Date, LocalDateTime> dateToLocalDateTimeMapperService) {

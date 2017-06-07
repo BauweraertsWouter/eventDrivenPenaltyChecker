@@ -6,8 +6,8 @@ import be.kdg.se.wbw.examenproject.penaltyChecker.domain.models.violation.Violat
 import java.time.LocalDateTime;
 
 public class ViolationEvent implements Event<Violation> {
-    private Violation eventBody;
-    private LocalDateTime timestamp;
+    private final Violation eventBody;
+    private final LocalDateTime timestamp;
 
     public ViolationEvent(Violation violation) {
         eventBody = violation;

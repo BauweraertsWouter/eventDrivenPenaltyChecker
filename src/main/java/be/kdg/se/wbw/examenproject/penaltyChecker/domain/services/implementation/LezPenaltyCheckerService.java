@@ -1,6 +1,6 @@
 package be.kdg.se.wbw.examenproject.penaltyChecker.domain.services.implementation;
 
-import be.kdg.se.wbw.examenproject.penaltyChecker.domain.events.ExceptionOccuredEvent;
+import be.kdg.se.wbw.examenproject.penaltyChecker.domain.events.ExceptionOccurredEvent;
 import be.kdg.se.wbw.examenproject.penaltyChecker.domain.events.LezCheckEvent;
 import be.kdg.se.wbw.examenproject.penaltyChecker.domain.events.ViolationEvent;
 import be.kdg.se.wbw.examenproject.penaltyChecker.domain.events.base.Event;
@@ -12,11 +12,12 @@ import be.kdg.se.wbw.examenproject.penaltyChecker.domain.services.api.EventHandl
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
+@SuppressWarnings("SpringJavaAutowiredMembersInspection")
 public class LezPenaltyCheckerService implements EventHandler {
     private static final Logger logger = Logger.getLogger(LezPenaltyCheckerService.class);
 
-    private EventDispatcherService dispatcherService;
-    private Class handledEvent;
+    private final EventDispatcherService dispatcherService;
+    private final Class handledEvent;
 
     @Autowired
     public LezPenaltyCheckerService(EventDispatcherService dispatcherService) {
@@ -41,7 +42,7 @@ public class LezPenaltyCheckerService implements EventHandler {
                                         ViolationType.LEZ,
                                         eventDetails.getMessage().getTimestamp(),
                                         eventDetails.getPlateDetails().getLicensePlate(),
-                                        eventDetails.getPlateDetails().getNationalNumer(),
+                                        eventDetails.getPlateDetails().getNationalNumber(),
                                         eventDetails.getCameraDetail().getLocation(),
                                         0,
                                         0,
@@ -54,7 +55,7 @@ public class LezPenaltyCheckerService implements EventHandler {
             logger.info("LezPenaltyCheckerService finished his job");
         } catch (Exception e) {
             logger.warn("Exception occurred in LezPenaltyCheckerService");
-            dispatcherService.dispatchEvent(new ExceptionOccuredEvent(e));
+            dispatcherService.dispatchEvent(new ExceptionOccurredEvent(e));
         }
 
     }

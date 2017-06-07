@@ -18,8 +18,8 @@ import java.io.IOException;
 public class CameraDetailsServiceProxyAdapterImpl implements CameraDetailsServiceProxyAdapter {
     private static final Logger logger = Logger.getLogger(CameraDetailsServiceProxyAdapterImpl.class);
 
-    private CameraServiceProxy proxy;
-    private TypeMapper<JSONObject, CameraDetailDto> cameraDetailMapper;
+    private final CameraServiceProxy proxy;
+    private final TypeMapper<JSONObject, CameraDetailDto> cameraDetailMapper;
 
     @Autowired
     public CameraDetailsServiceProxyAdapterImpl(CameraServiceProxy proxy, TypeMapper<JSONObject, CameraDetailDto> mapper) {

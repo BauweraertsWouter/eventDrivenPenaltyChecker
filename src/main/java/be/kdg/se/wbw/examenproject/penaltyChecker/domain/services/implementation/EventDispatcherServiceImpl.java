@@ -3,14 +3,16 @@ package be.kdg.se.wbw.examenproject.penaltyChecker.domain.services.implementatio
 import be.kdg.se.wbw.examenproject.penaltyChecker.domain.events.base.Event;
 import be.kdg.se.wbw.examenproject.penaltyChecker.domain.services.api.EventDispatcherService;
 import be.kdg.se.wbw.examenproject.penaltyChecker.domain.services.api.EventHandler;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
 
 import java.util.HashSet;
 import java.util.Set;
 
 @Component
+@Primary
 public class EventDispatcherServiceImpl implements EventDispatcherService {
-    private Set<EventHandler> registeredHandlers;
+    private final Set<EventHandler> registeredHandlers;
 
     public EventDispatcherServiceImpl() {
         this.registeredHandlers = new HashSet<>();

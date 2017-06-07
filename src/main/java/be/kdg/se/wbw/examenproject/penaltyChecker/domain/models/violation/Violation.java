@@ -6,14 +6,14 @@ import java.time.LocalDateTime;
 
 public class Violation {
     private ViolationType violationType;
-    private LocalDateTime timestamp;
-    private String licensePlate;
+    private final LocalDateTime timestamp;
+    private final String licensePlate;
     private String nationalNumber;
-    private Location location;
-    private int speed;
-    private int maxSpeed;
+    private final Location location;
+    private final int speed;
+    private final int maxSpeed;
     private int euroNorm;
-    private int maxEuroNorm;
+    private final int maxEuroNorm;
 
     public Violation(ViolationType violationType, LocalDateTime timestamp, String licensePlate, String nationalNumber,
                      Location location, int speed, int maxSpeed, int euroNorm, int maxEuroNorm) {

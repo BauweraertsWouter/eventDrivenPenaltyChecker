@@ -17,8 +17,8 @@ import java.io.IOException;
 public class LicensePlateServiceImpl implements LicensePlateServiceProxyAdapter {
     private static final Logger logger = Logger.getLogger(LicensePlateServiceImpl.class);
 
-    private LicensePlateServiceProxy proxy;
-    private TypeMapper<JSONObject, LicensePlateDetailDto> licensePlateDetailMapper;
+    private final LicensePlateServiceProxy proxy;
+    private final TypeMapper<JSONObject, LicensePlateDetailDto> licensePlateDetailMapper;
 
     @Autowired
     public LicensePlateServiceImpl(LicensePlateServiceProxy proxy, TypeMapper<JSONObject, LicensePlateDetailDto> mapper) {

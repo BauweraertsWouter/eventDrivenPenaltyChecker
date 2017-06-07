@@ -20,9 +20,9 @@ import java.util.function.Consumer;
 public class SpeedCheckDataCollectorService implements EventHandler {
     private static final Logger logger = Logger.getLogger(SpeedCheckDataCollectorService.class);
 
-    private Class handledType;
-    private EventDispatcherService dispatcherService;
-    private CameraMessageCache messageCache;
+    private final Class handledType;
+    private final EventDispatcherService dispatcherService;
+    private final CameraMessageCache messageCache;
 
     @Autowired
     public SpeedCheckDataCollectorService(EventDispatcherService dispatcherService, CameraMessageCache messageCache) {

@@ -1,9 +1,9 @@
 package be.kdg.se.wbw.examenproject.penaltyChecker.shared.dto;
 
 public class LicensePlateDetailDto {
-    private String plateId;
-    private String nationalNumber;
-    private int euroNorm;
+    private final String plateId;
+    private final String nationalNumber;
+    private final int euroNorm;
 
     private LicensePlateDetailDto(String plateId, String nationalNumber, int euroNorm) {
         this.plateId = plateId;

@@ -7,10 +7,10 @@ import be.kdg.se.wbw.examenproject.penaltyChecker.domain.models.cameraDetail.Cam
 import java.time.LocalDateTime;
 
 public class GetPreviousMessageForSpeedPenaltyCheckEvent implements Event<CameraDetail> {
-    private LocalDateTime timestamp;
-    private CameraDetail firstCameraDetail;
-    private CameraDetail secondCameraDetail;
-    private CameraMessage newestMessage;
+    private final LocalDateTime timestamp;
+    private final CameraDetail firstCameraDetail;
+    private final CameraDetail secondCameraDetail;
+    private final CameraMessage newestMessage;
 
     public GetPreviousMessageForSpeedPenaltyCheckEvent(CameraDetail first, CameraDetail second, CameraMessage newestMessage) {
         firstCameraDetail = first;

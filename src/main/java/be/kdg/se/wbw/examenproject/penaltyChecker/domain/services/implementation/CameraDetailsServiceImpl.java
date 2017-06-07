@@ -2,7 +2,7 @@ package be.kdg.se.wbw.examenproject.penaltyChecker.domain.services.implementatio
 
 import be.kdg.se.wbw.examenproject.penaltyChecker.adapters.api.CameraDetailsServiceProxyAdapter;
 import be.kdg.se.wbw.examenproject.penaltyChecker.domain.events.CameraMessageReceivedEvent;
-import be.kdg.se.wbw.examenproject.penaltyChecker.domain.events.ExceptionOccuredEvent;
+import be.kdg.se.wbw.examenproject.penaltyChecker.domain.events.ExceptionOccurredEvent;
 import be.kdg.se.wbw.examenproject.penaltyChecker.domain.events.GetPreviousMessageForSpeedPenaltyCheckEvent;
 import be.kdg.se.wbw.examenproject.penaltyChecker.domain.events.GetLicensePlateDetailForLezEvent;
 import be.kdg.se.wbw.examenproject.penaltyChecker.domain.events.base.Event;
@@ -28,11 +28,11 @@ import java.util.Optional;
 public class CameraDetailsServiceImpl implements CameraDetailsService, EventHandler {
     private static final Logger logger = Logger.getLogger(CameraDetailsServiceImpl.class);
 
-    private Class handledType;
-    private CameraDetailsServiceProxyAdapter proxyAdapter;
-    private CameraDetailsCache cameraDetailsCache;
-    private EventDispatcherService eventDispatcherService;
-    private TypeMapper<CameraDetailDto, CameraDetail> mapper;
+    private final Class handledType;
+    private final CameraDetailsServiceProxyAdapter proxyAdapter;
+    private final CameraDetailsCache cameraDetailsCache;
+    private final EventDispatcherService eventDispatcherService;
+    private final TypeMapper<CameraDetailDto, CameraDetail> mapper;
 
     @Autowired
     public CameraDetailsServiceImpl(CameraDetailsServiceProxyAdapter proxyAdapter, CameraDetailsCache cameraDetailsCache, EventDispatcherService eventDispatcherService, TypeMapper<CameraDetailDto, CameraDetail> mapper) {
@@ -72,9 +72,9 @@ public class CameraDetailsServiceImpl implements CameraDetailsService, EventHand
             CameraDetail latestCameraDetail = getCameraDetail(myEvent);
             newEvents.addAll(getNewEvents(latestCameraDetail, myEvent));
         } catch (Exception e) {
-            newEvents.add(new ExceptionOccuredEvent(e));
+            newEvents.add(new ExceptionOccurredEvent(e));
         }
-        newEvents.forEach(newEvent -> eventDispatcherService.dispatchEvent(newEvent));
+        newEvents.forEach(eventDispatcherService::dispatchEvent);
     }
 
     private Collection<? extends Event> getNewEvents(CameraDetail second, CameraMessageReceivedEvent event) {

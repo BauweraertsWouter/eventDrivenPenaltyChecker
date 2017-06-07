@@ -1,9 +1,9 @@
 package be.kdg.se.wbw.examenproject.penaltyChecker.shared.dto;
 
 public class SegmentDto {
-    private int connectedCameraId;
-    private int distance;
-    private int speedLimit;
+    private final int connectedCameraId;
+    private final int distance;
+    private final int speedLimit;
 
     private SegmentDto(int connectedCameraId, int distance, int speedLimit) {
         this.connectedCameraId = connectedCameraId;

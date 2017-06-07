@@ -1,7 +1,7 @@
 package be.kdg.se.wbw.examenproject.penaltyChecker.domain.services.implementation;
 
 import be.kdg.se.wbw.examenproject.penaltyChecker.domain.events.CameraDetailsFoundEvent;
-import be.kdg.se.wbw.examenproject.penaltyChecker.domain.events.ExceptionOccuredEvent;
+import be.kdg.se.wbw.examenproject.penaltyChecker.domain.events.ExceptionOccurredEvent;
 import be.kdg.se.wbw.examenproject.penaltyChecker.domain.events.base.Event;
 import be.kdg.se.wbw.examenproject.penaltyChecker.domain.models.cameraDetail.CameraDetail;
 import be.kdg.se.wbw.examenproject.penaltyChecker.domain.services.api.EventHandler;
@@ -31,8 +31,8 @@ public class EventDispatcherServiceImplTest {
     }
 
     @Test
-    public void dispatchEvent_givenExceptionOccuredEvent_exceptionEventHandlerGetsNotified() throws Exception {
-        event = new ExceptionOccuredEvent(new Exception());
+    public void dispatchEvent_givenExceptionOccurredEvent_exceptionEventHandlerGetsNotified() throws Exception {
+        event = new ExceptionOccurredEvent(new Exception());
         when(exceptionEventHandler.canHandle(event.getClass())).thenReturn(true);
         dispatcherService.dispatchEvent(event);
         verify(exceptionEventHandler, times(1)).trigger(event);

@@ -34,9 +34,10 @@ public class CameraMessageDto {
 
     public int getCameraId() { return cameraId; }
 
+    @SuppressWarnings("SameParameterValue")
     public static class CameraMessageDtoBuilder {
         private Date date;
-        private String licensPlate;
+        private String licensePlate;
         private int cameraId;
 
         public CameraMessageDtoBuilder withTimeStamp(Date date) {
@@ -44,8 +45,8 @@ public class CameraMessageDto {
             return this;
         }
 
-        public CameraMessageDtoBuilder withLicensePlate(String licensPlate) {
-            this.licensPlate = licensPlate;
+        public CameraMessageDtoBuilder withLicensePlate(String licensePlate) {
+            this.licensePlate = licensePlate;
             return this;
         }
 
@@ -55,7 +56,7 @@ public class CameraMessageDto {
         }
 
         public CameraMessageDto build() {
-            return new CameraMessageDto(date, licensPlate, cameraId);
+            return new CameraMessageDto(date, licensePlate, cameraId);
         }
     }
 }

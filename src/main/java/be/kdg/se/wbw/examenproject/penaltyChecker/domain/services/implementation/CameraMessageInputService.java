@@ -1,7 +1,7 @@
 package be.kdg.se.wbw.examenproject.penaltyChecker.domain.services.implementation;
 
 import be.kdg.se.wbw.examenproject.penaltyChecker.domain.events.CameraMessageReceivedEvent;
-import be.kdg.se.wbw.examenproject.penaltyChecker.domain.events.ExceptionOccuredEvent;
+import be.kdg.se.wbw.examenproject.penaltyChecker.domain.events.ExceptionOccurredEvent;
 import be.kdg.se.wbw.examenproject.penaltyChecker.domain.events.base.Event;
 import be.kdg.se.wbw.examenproject.penaltyChecker.domain.models.CameraMessage;
 import be.kdg.se.wbw.examenproject.penaltyChecker.domain.services.api.EventDispatcherService;
@@ -15,8 +15,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class CameraMessageInputService implements Subscriber<CameraMessageDto> {
     private static final Logger logger = Logger.getLogger(CameraMessageInputService.class);
-    private TypeMapper<CameraMessageDto, CameraMessage> mapper;
-    private EventDispatcherService eventDispatcherService;
+    private final TypeMapper<CameraMessageDto, CameraMessage> mapper;
+    private final EventDispatcherService eventDispatcherService;
 
 
     @Autowired
@@ -36,7 +36,7 @@ public class CameraMessageInputService implements Subscriber<CameraMessageDto> {
             logger.info("CameraMessageReceivedEvent created");
         }catch (Exception e){
             logger.warn("Exception occurred in CameraMessageInputService");
-            event = new ExceptionOccuredEvent(e);
+            event = new ExceptionOccurredEvent(e);
         }finally {
             eventDispatcherService.dispatchEvent(event);
         }

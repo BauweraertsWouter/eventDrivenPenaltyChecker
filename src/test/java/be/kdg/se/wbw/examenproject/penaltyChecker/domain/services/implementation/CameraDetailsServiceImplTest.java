@@ -2,10 +2,9 @@ package be.kdg.se.wbw.examenproject.penaltyChecker.domain.services.implementatio
 
 import be.kdg.se.wbw.examenproject.penaltyChecker.adapters.api.CameraDetailsServiceProxyAdapter;
 import be.kdg.se.wbw.examenproject.penaltyChecker.domain.events.CameraMessageReceivedEvent;
-import be.kdg.se.wbw.examenproject.penaltyChecker.domain.events.ExceptionOccuredEvent;
+import be.kdg.se.wbw.examenproject.penaltyChecker.domain.events.ExceptionOccurredEvent;
 import be.kdg.se.wbw.examenproject.penaltyChecker.domain.events.GetPreviousMessageForSpeedPenaltyCheckEvent;
 import be.kdg.se.wbw.examenproject.penaltyChecker.domain.events.GetLicensePlateDetailForLezEvent;
-import be.kdg.se.wbw.examenproject.penaltyChecker.domain.events.base.Event;
 import be.kdg.se.wbw.examenproject.penaltyChecker.domain.models.CameraMessage;
 import be.kdg.se.wbw.examenproject.penaltyChecker.domain.models.cameraDetail.CameraDetail;
 import be.kdg.se.wbw.examenproject.penaltyChecker.domain.models.cameraDetail.Segment;
@@ -60,7 +59,7 @@ public class CameraDetailsServiceImplTest {
     }
 
     @Test
-    public void trigger_withNoSegment_dispachterReceivesGetLicensePlateForLezEvent() throws Exception {
+    public void trigger_withNoSegment_dispatcherReceivesGetLicensePlateForLezEvent() throws Exception {
         when(cache.findCamera(1))
                 .thenReturn(
                         Optional.of(
@@ -78,7 +77,7 @@ public class CameraDetailsServiceImplTest {
     }
 
     @Test
-    public void trigger_withSegment_dispachterReceivesGetDetailsForSpeedCheckEvent() throws Exception {
+    public void trigger_withSegment_dispatcherReceivesGetDetailsForSpeedCheckEvent() throws Exception {
         when(cache.findCamera(1))
                 .thenReturn(
                         Optional.of(
@@ -100,7 +99,7 @@ public class CameraDetailsServiceImplTest {
     @Test
     public void canHandle() throws Exception {
         assertThat(detailsService.canHandle(CameraMessageReceivedEvent.class)).isTrue();
-        assertThat(detailsService.canHandle(ExceptionOccuredEvent.class)).isFalse();
+        assertThat(detailsService.canHandle(ExceptionOccurredEvent.class)).isFalse();
     }
 
 }

@@ -3,11 +3,11 @@ package be.kdg.se.wbw.examenproject.penaltyChecker.shared.dto;
 import java.time.LocalDateTime;
 
 public class CameraDetailDto {
-    private int cameraId;
-    private LocationDto location;
-    private SegmentDto segment;
-    private int euroNorm;
-    private LocalDateTime retrievingTimestamp;
+    private final int cameraId;
+    private final LocationDto location;
+    private final SegmentDto segment;
+    private final int euroNorm;
+    private final LocalDateTime retrievingTimestamp;
 
     private CameraDetailDto(int cameraId, LocationDto location, SegmentDto segment, int euroNorm, LocalDateTime time) {
         this.cameraId = cameraId;

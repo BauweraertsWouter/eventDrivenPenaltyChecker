@@ -4,11 +4,11 @@ import be.kdg.se.wbw.examenproject.penaltyChecker.domain.events.base.Event;
 
 import java.time.LocalDateTime;
 
-public class ExceptionOccuredEvent implements Event<Exception> {
-    private Exception eventBody;
-    private LocalDateTime timestamp;
+public class ExceptionOccurredEvent implements Event<Exception> {
+    private final Exception eventBody;
+    private final LocalDateTime timestamp;
 
-    public ExceptionOccuredEvent(Exception eventBody) {
+    public ExceptionOccurredEvent(Exception eventBody) {
         this.eventBody = eventBody;
         this.timestamp = LocalDateTime.now();
     }

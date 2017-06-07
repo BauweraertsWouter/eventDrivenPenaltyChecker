@@ -14,7 +14,7 @@ import java.util.Optional;
 @Component
 public class CameraDetailsCacheImpl implements CameraDetailsCache {
     private static final Logger logger = Logger.getLogger(CameraDetailsCacheImpl.class);
-    private List<CameraDetail> cameras = Collections.synchronizedList(new ArrayList<>());
+    private final List<CameraDetail> cameras = Collections.synchronizedList(new ArrayList<>());
     private int interval;
 
     @Override
@@ -46,7 +46,7 @@ public class CameraDetailsCacheImpl implements CameraDetailsCache {
         LocalDateTime edge = LocalDateTime.now().minusMinutes(interval);
         new ArrayList<>(cameras).stream()
                 .filter(c->c.getRetrievingTimestamp().isBefore(edge))
-                .forEach(c->cameras.remove(c));
+                .forEach(cameras::remove);
         logger.info("Scheduled task completed: Cache cleanup");
     }
 

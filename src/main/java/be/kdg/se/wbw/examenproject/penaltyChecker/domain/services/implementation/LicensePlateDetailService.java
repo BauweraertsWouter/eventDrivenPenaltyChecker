@@ -24,11 +24,11 @@ import java.util.List;
 public class LicensePlateDetailService implements EventHandler {
     private static final Logger logger = Logger.getLogger(LicensePlateDetailService.class);
 
-    private EventDispatcherService dispatcherService;
-    private LicensePlateServiceProxyAdapter proxyAdapter;
-    private TypeMapper<LicensePlateDetailDto, LicensePlateDetails> mapper;
+    private final EventDispatcherService dispatcherService;
+    private final LicensePlateServiceProxyAdapter proxyAdapter;
+    private final TypeMapper<LicensePlateDetailDto, LicensePlateDetails> mapper;
 
-    private List<Class> handledTypes;
+    private final List<Class> handledTypes;
 
     @Autowired
     public LicensePlateDetailService(EventDispatcherService dispatcherService, LicensePlateServiceProxyAdapter proxyAdapter, TypeMapper<LicensePlateDetailDto, LicensePlateDetails> mapper) {
@@ -55,7 +55,7 @@ public class LicensePlateDetailService implements EventHandler {
                 triggerLezCheck((GetLicensePlateDetailForLezEvent) event);
         }catch (Exception e){
             logger.warn("Exception occurred in LicensePlateDetailService");
-            dispatcherService.dispatchEvent(new ExceptionOccuredEvent(e));
+            dispatcherService.dispatchEvent(new ExceptionOccurredEvent(e));
         }
     }
 
@@ -68,7 +68,7 @@ public class LicensePlateDetailService implements EventHandler {
 
     private void completeSpeedViolation(Violation violation) {
         LicensePlateDetails details = mapper.map(proxyAdapter.get(violation.getLicensePlate()));
-        violation.setNationalNumber(details.getNationalNumer());
+        violation.setNationalNumber(details.getNationalNumber());
         dispatcherService.dispatchEvent(new ViolationEvent(violation));
     }
 

@@ -37,8 +37,8 @@ public class LicensePlateDetailServiceTest {
     private TypeMapper<LicensePlateDetailDto, LicensePlateDetails> mapper;
 
     @Test
-    public void canHandle_GivenExcepeptions_returnsExpectedResult() throws Exception {
-        assertThat(service.canHandle(ExceptionOccuredEvent.class)).isFalse();
+    public void canHandle_GivenExceptions_returnsExpectedResult() throws Exception {
+        assertThat(service.canHandle(ExceptionOccurredEvent.class)).isFalse();
         assertThat(service.canHandle(GetLicensePlateDetailForLezEvent.class)).isTrue();
         assertThat(service.canHandle(SpeedViolationDetectedEvent.class)).isTrue();
     }

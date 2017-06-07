@@ -1,8 +1,8 @@
 package be.kdg.se.wbw.examenproject.penaltyChecker.shared.dto;
 
 public class LocationDto {
-    private int latitude;
-    private int longitude;
+    private final int latitude;
+    private final int longitude;
 
     private LocationDto(int latitude, int longitude) {
         this.latitude = latitude;

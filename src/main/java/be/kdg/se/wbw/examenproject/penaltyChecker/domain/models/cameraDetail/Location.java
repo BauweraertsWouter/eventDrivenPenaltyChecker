@@ -1,8 +1,8 @@
 package be.kdg.se.wbw.examenproject.penaltyChecker.domain.models.cameraDetail;
 
 public class Location {
-    private int latitude;
-    private int longitude;
+    private final int latitude;
+    private final int longitude;
 
     public Location(int latitude, int longitude) {
         this.latitude = latitude;

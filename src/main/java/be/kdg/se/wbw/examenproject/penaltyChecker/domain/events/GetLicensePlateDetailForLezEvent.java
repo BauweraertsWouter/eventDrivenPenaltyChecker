@@ -6,8 +6,8 @@ import be.kdg.se.wbw.examenproject.penaltyChecker.domain.models.LezCheckLicenseP
 import java.time.LocalDateTime;
 
 public class GetLicensePlateDetailForLezEvent implements Event<LezCheckLicensePlateRequestData> {
-    private LezCheckLicensePlateRequestData eventBody;
-    private LocalDateTime timeStamp;
+    private final LezCheckLicensePlateRequestData eventBody;
+    private final LocalDateTime timeStamp;
 
     public GetLicensePlateDetailForLezEvent(LezCheckLicensePlateRequestData eventBody) {
         this.eventBody = eventBody;
