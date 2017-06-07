@@ -7,4 +7,6 @@ import java.util.Optional;
 public interface CameraMessageCache {
     Optional<CameraMessage> findPreviousMessage(int cameraId, String licensePlate);
     void add(CameraMessage cameraMessage);
+    void cleanUp();
+    void setCleanIntervalMinutes(int minutes);
 }

@@ -3,7 +3,7 @@ package be.kdg.se.wbw.examenproject.penaltyChecker.domain.services.implementatio
 import be.kdg.se.wbw.examenproject.penaltyChecker.adapters.api.CameraDetailsServiceProxyAdapter;
 import be.kdg.se.wbw.examenproject.penaltyChecker.domain.events.CameraMessageReceivedEvent;
 import be.kdg.se.wbw.examenproject.penaltyChecker.domain.events.ExceptionOccuredEvent;
-import be.kdg.se.wbw.examenproject.penaltyChecker.domain.events.GetDetailsForSpeedCheckEvent;
+import be.kdg.se.wbw.examenproject.penaltyChecker.domain.events.GetPreviousMessageForSpeedPenaltyCheckEvent;
 import be.kdg.se.wbw.examenproject.penaltyChecker.domain.events.GetLicensePlateDetailForLezEvent;
 import be.kdg.se.wbw.examenproject.penaltyChecker.domain.events.base.Event;
 import be.kdg.se.wbw.examenproject.penaltyChecker.domain.models.CameraMessage;
@@ -92,26 +92,10 @@ public class CameraDetailsServiceImplTest {
                 .withTimestamp(LocalDateTime.now())
                 .build())
         );
-        verify(dispatcherService).dispatchEvent(any(GetDetailsForSpeedCheckEvent.class));
+        verify(dispatcherService).dispatchEvent(any(GetPreviousMessageForSpeedPenaltyCheckEvent.class));
     }
 
-    @Test
-    public void trigger_withSegmentAndEuronorm_dispachterReceivesTwoEvents() throws Exception {
-        when(cache.findCamera(1))
-                .thenReturn(
-                        Optional.of(
-                                new CameraDetail(1, null, new Segment(2,25,25), 3, LocalDateTime.now()
-                                )
-                        )
-                );
-        detailsService.trigger(new CameraMessageReceivedEvent(new CameraMessage.CameraMessageBuilder()
-                .withCameraId(1)
-                .withLicensePlate("123")
-                .withTimestamp(LocalDateTime.now())
-                .build())
-        );
-        verify(dispatcherService, times(2)).dispatchEvent(any(Event.class));
-    }
+
 
     @Test
     public void canHandle() throws Exception {

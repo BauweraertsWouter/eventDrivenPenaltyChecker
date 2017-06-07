@@ -22,7 +22,7 @@ public class CameraMessage {
 
     public static class CameraMessageBuilder {
         private String licensePlate;
-        private LocalDateTime timestamp;
+        private LocalDateTime timestamp = LocalDateTime.now();
 
         private int cameraId;
 

@@ -1,23 +1,22 @@
 package be.kdg.se.wbw.examenproject.penaltyChecker.domain.events;
 
 import be.kdg.se.wbw.examenproject.penaltyChecker.domain.events.base.Event;
-import be.kdg.se.wbw.examenproject.penaltyChecker.domain.models.cameraDetail.CameraDetail;
+import be.kdg.se.wbw.examenproject.penaltyChecker.domain.models.LezCheckLicensePlateRequestData;
 
 import java.time.LocalDateTime;
 
-public class GetLicensePlateDetailForLezEvent implements Event<CameraDetail> {
-    private CameraDetail cameraDetail;
-    private Event innerEvent;
+public class GetLicensePlateDetailForLezEvent implements Event<LezCheckLicensePlateRequestData> {
+    private LezCheckLicensePlateRequestData eventBody;
     private LocalDateTime timeStamp;
 
-    public GetLicensePlateDetailForLezEvent(CameraDetail detail) {
-        cameraDetail = detail;
+    public GetLicensePlateDetailForLezEvent(LezCheckLicensePlateRequestData eventBody) {
+        this.eventBody = eventBody;
         timeStamp = LocalDateTime.now();
     }
 
     @Override
-    public CameraDetail getEventDetails() {
-        return cameraDetail;
+    public LezCheckLicensePlateRequestData getEventDetails() {
+        return eventBody;
     }
 
     @Override
@@ -25,13 +24,4 @@ public class GetLicensePlateDetailForLezEvent implements Event<CameraDetail> {
         return timeStamp;
     }
 
-    @Override
-    public void addEvent(Event e) {
-        innerEvent = e;
-    }
-
-    @Override
-    public Event getInnerEvent() {
-        return innerEvent;
-    }
 }

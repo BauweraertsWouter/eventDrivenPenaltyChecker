@@ -8,7 +8,6 @@ import java.time.LocalDateTime;
 public class LezCheckEvent implements Event<LezData> {
     private LezData eventBody;
     private LocalDateTime timestamp;
-    private Event innerEvent;
 
     public LezCheckEvent(LezData lezData) {
         eventBody = lezData;
@@ -25,13 +24,4 @@ public class LezCheckEvent implements Event<LezData> {
         return timestamp;
     }
 
-    @Override
-    public void addEvent(Event e) {
-        innerEvent = e;
-    }
-
-    @Override
-    public Event getInnerEvent() {
-        return innerEvent;
-    }
 }

@@ -4,6 +4,7 @@ import be.kdg.se.wbw.examenproject.penaltyChecker.adapters.api.LicensePlateServi
 import be.kdg.se.wbw.examenproject.penaltyChecker.domain.events.*;
 import be.kdg.se.wbw.examenproject.penaltyChecker.domain.events.base.Event;
 import be.kdg.se.wbw.examenproject.penaltyChecker.domain.models.CameraMessage;
+import be.kdg.se.wbw.examenproject.penaltyChecker.domain.models.LezCheckLicensePlateRequestData;
 import be.kdg.se.wbw.examenproject.penaltyChecker.domain.models.LicensePlateDetails;
 import be.kdg.se.wbw.examenproject.penaltyChecker.domain.models.cameraDetail.CameraDetail;
 import be.kdg.se.wbw.examenproject.penaltyChecker.domain.models.violation.Violation;
@@ -11,7 +12,6 @@ import be.kdg.se.wbw.examenproject.penaltyChecker.domain.models.violation.Violat
 import be.kdg.se.wbw.examenproject.penaltyChecker.domain.services.implementation.LicensePlateDetailService;
 import be.kdg.se.wbw.examenproject.penaltyChecker.shared.api.TypeMapper;
 import be.kdg.se.wbw.examenproject.penaltyChecker.shared.dto.LicensePlateDetailDto;
-import org.assertj.core.api.Assertions;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -45,12 +45,15 @@ public class LicensePlateDetailServiceTest {
 
     @Test
     public void trigger_withLez_dispatcherReceivesLezCheckEvent() throws Exception {
-        Event lez = new GetLicensePlateDetailForLezEvent(new CameraDetail(1, null, null, 3, LocalDateTime.now()));
-        lez.addEvent(new CameraMessageReceivedEvent(new CameraMessage.CameraMessageBuilder()
-                .withTimestamp(LocalDateTime.now())
-                .withLicensePlate("132")
-                .withCameraId(1)
-                .build()));
+        LezCheckLicensePlateRequestData requestData = new LezCheckLicensePlateRequestData(
+                new CameraDetail(1, null, null, 3, LocalDateTime.now()),
+                new CameraMessage.CameraMessageBuilder()
+                    .withLicensePlate("123")
+                    .withCameraId(1)
+                    .build()
+                );
+        Event lez = new GetLicensePlateDetailForLezEvent(requestData);
+
         when(adapter.get("123")).thenReturn(new LicensePlateDetailDto.LicensePlateDetailDtoBuilder()
                 .withEuroNorm(2)
                 .withNationalNumber("654")

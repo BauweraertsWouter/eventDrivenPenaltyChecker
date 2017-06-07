@@ -3,9 +3,10 @@ package be.kdg.se.wbw.examenproject.penaltyChecker.domain.services.implementatio
 import be.kdg.se.wbw.examenproject.penaltyChecker.adapters.api.CameraDetailsServiceProxyAdapter;
 import be.kdg.se.wbw.examenproject.penaltyChecker.domain.events.CameraMessageReceivedEvent;
 import be.kdg.se.wbw.examenproject.penaltyChecker.domain.events.ExceptionOccuredEvent;
-import be.kdg.se.wbw.examenproject.penaltyChecker.domain.events.GetDetailsForSpeedCheckEvent;
+import be.kdg.se.wbw.examenproject.penaltyChecker.domain.events.GetPreviousMessageForSpeedPenaltyCheckEvent;
 import be.kdg.se.wbw.examenproject.penaltyChecker.domain.events.GetLicensePlateDetailForLezEvent;
 import be.kdg.se.wbw.examenproject.penaltyChecker.domain.events.base.Event;
+import be.kdg.se.wbw.examenproject.penaltyChecker.domain.models.LezCheckLicensePlateRequestData;
 import be.kdg.se.wbw.examenproject.penaltyChecker.domain.models.cameraDetail.CameraDetail;
 import be.kdg.se.wbw.examenproject.penaltyChecker.domain.services.api.CameraDetailsCache;
 import be.kdg.se.wbw.examenproject.penaltyChecker.domain.services.api.CameraDetailsService;
@@ -51,39 +52,52 @@ public class CameraDetailsServiceImpl implements CameraDetailsService, EventHand
     @Override
     public CameraDetail findCamera(int cameraId) {
         Optional<CameraDetail> cached = cameraDetailsCache.findCamera(cameraId);
-        return cached.orElseGet(() -> mapper.map(proxyAdapter.get(cameraId)));
+        return cached.orElseGet(() -> {
+            CameraDetail detail = mapper.map(proxyAdapter.get(cameraId));
+            cameraDetailsCache.addCamera(detail);
+            return detail;
+        });
     }
 
     @Override
-    public CameraDetail findPreviousCamera(int cameraId) {
-        return null;
+    public Optional<CameraDetail> findPreviousCamera(int cameraId) {
+        return cameraDetailsCache.findPreviousCamera(cameraId);
     }
 
     @Override
     public void trigger(Event event) {
         List<Event> newEvents = new ArrayList<>();
         try {
-            CameraDetail detail = getCameraDetail((CameraMessageReceivedEvent) event);
-            newEvents.addAll(getNewEvents(event, detail));
+            CameraMessageReceivedEvent myEvent = (CameraMessageReceivedEvent) event;
+            CameraDetail latestCameraDetail = getCameraDetail(myEvent);
+            newEvents.addAll(getNewEvents(latestCameraDetail, myEvent));
         } catch (Exception e) {
             newEvents.add(new ExceptionOccuredEvent(e));
         }
         newEvents.forEach(newEvent -> eventDispatcherService.dispatchEvent(newEvent));
     }
 
-    private Collection<? extends Event> getNewEvents(Event event, CameraDetail detail) {
+    private Collection<? extends Event> getNewEvents(CameraDetail second, CameraMessageReceivedEvent event) {
         List<Event> events = new ArrayList<>();
-        if (detail.isCheckLez()) {
-            Event e = new GetLicensePlateDetailForLezEvent(detail);
-            e.addEvent(event);
+        if (second.isCheckLez()) {
+            Event e = new GetLicensePlateDetailForLezEvent(new LezCheckLicensePlateRequestData(second, event.getEventDetails()));
             events.add(e);
         }
-        if (detail.isCheckSpeed()) {
-            Event e = new GetDetailsForSpeedCheckEvent(detail);
-            e.addEvent(event);
-            events.add(e);
+        if (second.isCheckSpeed()) {
+            createEventWhenThePreviousCameraIsBuffered(second, event, events);
         }
         return events;
+    }
+
+    private void createEventWhenThePreviousCameraIsBuffered(CameraDetail second, CameraMessageReceivedEvent myEvent, List<Event> events) {
+        cameraDetailsCache.findPreviousCamera(second.getCameraId()).ifPresent(firstCameraDetail->
+                events.add(
+                        new GetPreviousMessageForSpeedPenaltyCheckEvent(
+                                firstCameraDetail,
+                                second,
+                                myEvent.getEventDetails()
+                        )
+        ));
     }
 
     @Override

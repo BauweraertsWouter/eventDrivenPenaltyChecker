@@ -6,31 +6,21 @@ import be.kdg.se.wbw.examenproject.penaltyChecker.domain.models.CameraMessage;
 import java.time.LocalDateTime;
 
 public class CameraMessageReceivedEvent implements Event<CameraMessage> {
-    private CameraMessage eventBody;
+    private CameraMessage cameraMessage;
     private LocalDateTime timestamp;
-    private Event innerEvent;
 
-    public CameraMessageReceivedEvent(CameraMessage eventBody) {
-        this.eventBody = eventBody;
+    public CameraMessageReceivedEvent(CameraMessage cameraMessage) {
+        this.cameraMessage = cameraMessage;
         this.timestamp = LocalDateTime.now();
-    }
-
-    public Event getInnerEvent() {
-        return innerEvent;
     }
 
     @Override
     public CameraMessage getEventDetails() {
-        return eventBody;
+        return cameraMessage;
     }
 
     @Override
     public LocalDateTime getTimeStamp() {
         return timestamp;
-    }
-
-    @Override
-    public void addEvent(Event e) {
-        innerEvent = e;
     }
 }

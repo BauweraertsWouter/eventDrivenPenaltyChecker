@@ -8,7 +8,6 @@ import java.time.LocalDateTime;
 public class CameraDetailsFoundEvent implements Event<CameraDetail> {
     private CameraDetail eventBody;
     private LocalDateTime timestamp;
-    private Event innerEvent;
 
     public CameraDetailsFoundEvent(CameraDetail eventBody) {
         this.eventBody = eventBody;
@@ -23,15 +22,5 @@ public class CameraDetailsFoundEvent implements Event<CameraDetail> {
     @Override
     public LocalDateTime getTimeStamp() {
         return timestamp;
-    }
-
-    @Override
-    public void addEvent(Event e) {
-        innerEvent = e;
-    }
-
-    @Override
-    public Event getInnerEvent() {
-        return innerEvent;
     }
 }

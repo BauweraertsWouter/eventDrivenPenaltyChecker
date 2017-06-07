@@ -8,7 +8,6 @@ import java.time.LocalDateTime;
 public class ViolationEvent implements Event<Violation> {
     private Violation eventBody;
     private LocalDateTime timestamp;
-    private Event innerEvent;
 
     public ViolationEvent(Violation violation) {
         eventBody = violation;
@@ -25,13 +24,4 @@ public class ViolationEvent implements Event<Violation> {
         return timestamp;
     }
 
-    @Override
-    public void addEvent(Event e) {
-        innerEvent = e;
-    }
-
-    @Override
-    public Event getInnerEvent() {
-        return innerEvent;
-    }
 }

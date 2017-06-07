@@ -7,7 +7,6 @@ import java.time.LocalDateTime;
 
 
 public class SpeedViolationDetectedEvent implements Event<Violation>{
-    private Event innerEvent;
     private Violation eventBody;
     private LocalDateTime timestamp;
 
@@ -24,15 +23,5 @@ public class SpeedViolationDetectedEvent implements Event<Violation>{
     @Override
     public LocalDateTime getTimeStamp() {
         return timestamp;
-    }
-
-    @Override
-    public void addEvent(Event e) {
-        innerEvent = e;
-    }
-
-    @Override
-    public Event getInnerEvent() {
-        return innerEvent;
     }
 }

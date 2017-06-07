@@ -1,28 +1,29 @@
 package be.kdg.se.wbw.examenproject.penaltyChecker.domain.services.implementation;
 
 import be.kdg.se.wbw.examenproject.penaltyChecker.adapters.api.LicensePlateServiceProxyAdapter;
-import be.kdg.se.wbw.examenproject.penaltyChecker.domain.events.GetLicensePlateDetailForLezEvent;
-import be.kdg.se.wbw.examenproject.penaltyChecker.domain.events.LezCheckEvent;
-import be.kdg.se.wbw.examenproject.penaltyChecker.domain.events.SpeedViolationDetectedEvent;
-import be.kdg.se.wbw.examenproject.penaltyChecker.domain.events.ViolationEvent;
+import be.kdg.se.wbw.examenproject.penaltyChecker.domain.events.*;
 import be.kdg.se.wbw.examenproject.penaltyChecker.domain.events.base.Event;
 import be.kdg.se.wbw.examenproject.penaltyChecker.domain.models.CameraMessage;
+import be.kdg.se.wbw.examenproject.penaltyChecker.domain.models.LezCheckLicensePlateRequestData;
 import be.kdg.se.wbw.examenproject.penaltyChecker.domain.models.LezData;
 import be.kdg.se.wbw.examenproject.penaltyChecker.domain.models.LicensePlateDetails;
-import be.kdg.se.wbw.examenproject.penaltyChecker.domain.models.cameraDetail.CameraDetail;
 import be.kdg.se.wbw.examenproject.penaltyChecker.domain.models.violation.Violation;
 import be.kdg.se.wbw.examenproject.penaltyChecker.domain.services.api.EventDispatcherService;
 import be.kdg.se.wbw.examenproject.penaltyChecker.domain.services.api.EventHandler;
 import be.kdg.se.wbw.examenproject.penaltyChecker.shared.api.TypeMapper;
 import be.kdg.se.wbw.examenproject.penaltyChecker.shared.dto.LicensePlateDetailDto;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.List;
 
 @Component
 public class LicensePlateDetailService implements EventHandler {
+    private static final Logger logger = Logger.getLogger(LicensePlateDetailService.class);
+
     private EventDispatcherService dispatcherService;
     private LicensePlateServiceProxyAdapter proxyAdapter;
     private TypeMapper<LicensePlateDetailDto, LicensePlateDetails> mapper;
@@ -39,19 +40,30 @@ public class LicensePlateDetailService implements EventHandler {
         handledTypes.add(SpeedViolationDetectedEvent.class);
     }
 
+    @PostConstruct
+    private void registerToDispatcher(){
+        dispatcherService.addHandler(this);
+    }
+
     @Override
     public void trigger(Event event) {
-        if (event.getClass().equals(SpeedViolationDetectedEvent.class))
-            completeSpeedViolation(((SpeedViolationDetectedEvent)event).getEventDetails());
-        else
-            triggerLezCheck((GetLicensePlateDetailForLezEvent)event);
+        logger.info("Event received in LicensePlateDetailService");
+        try {
+            if (event.getClass().equals(SpeedViolationDetectedEvent.class))
+                completeSpeedViolation(((SpeedViolationDetectedEvent) event).getEventDetails());
+            else
+                triggerLezCheck((GetLicensePlateDetailForLezEvent) event);
+        }catch (Exception e){
+            logger.warn("Exception occurred in LicensePlateDetailService");
+            dispatcherService.dispatchEvent(new ExceptionOccuredEvent(e));
+        }
     }
 
     private void triggerLezCheck(GetLicensePlateDetailForLezEvent event) {
-        CameraDetail cameraDetail = event.getEventDetails();
-        CameraMessage message = (CameraMessage)event.getInnerEvent().getEventDetails();
+        LezCheckLicensePlateRequestData licensePlateRequestData = event.getEventDetails();
+        CameraMessage message = licensePlateRequestData.getCameraMessage();
         LicensePlateDetails plateDetails = mapper.map(proxyAdapter.get(message.getLicensePlate()));
-        dispatcherService.dispatchEvent(new LezCheckEvent(new LezData(message, cameraDetail, plateDetails)));
+        dispatcherService.dispatchEvent(new LezCheckEvent(new LezData(message, licensePlateRequestData.getDetail(), plateDetails)));
     }
 
     private void completeSpeedViolation(Violation violation) {
