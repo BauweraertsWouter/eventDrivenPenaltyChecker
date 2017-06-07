@@ -10,4 +10,7 @@ import java.util.Optional;
  */
 public interface CameraDetailsCache {
     Optional<CameraDetail> findCamera(int cameraId);
+    Optional<CameraDetail> findPreviousCamera(int cameraId);
+    void addCamera(CameraDetail cameraDetail);
+    void clear();
 }
