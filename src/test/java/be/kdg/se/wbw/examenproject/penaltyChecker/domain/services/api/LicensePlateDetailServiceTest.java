@@ -20,6 +20,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import java.time.LocalDateTime;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -37,9 +38,9 @@ public class LicensePlateDetailServiceTest {
 
     @Test
     public void canHandle_GivenExcepeptions_returnsExpectedResult() throws Exception {
-        Assertions.assertThat(service.canHandle(ExceptionOccuredEvent.class)).isFalse();
-        Assertions.assertThat(service.canHandle(GetLicensePlateDetailForLezEvent.class)).isTrue();
-        Assertions.assertThat(service.canHandle(SpeedViolationDetectedEvent.class)).isTrue();
+        assertThat(service.canHandle(ExceptionOccuredEvent.class)).isFalse();
+        assertThat(service.canHandle(GetLicensePlateDetailForLezEvent.class)).isTrue();
+        assertThat(service.canHandle(SpeedViolationDetectedEvent.class)).isTrue();
     }
 
     @Test

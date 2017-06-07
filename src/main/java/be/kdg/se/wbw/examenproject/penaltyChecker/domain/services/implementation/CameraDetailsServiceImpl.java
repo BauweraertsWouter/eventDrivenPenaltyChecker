@@ -13,6 +13,7 @@ import be.kdg.se.wbw.examenproject.penaltyChecker.domain.services.api.EventDispa
 import be.kdg.se.wbw.examenproject.penaltyChecker.domain.services.api.EventHandler;
 import be.kdg.se.wbw.examenproject.penaltyChecker.shared.api.TypeMapper;
 import be.kdg.se.wbw.examenproject.penaltyChecker.shared.dto.CameraDetailDto;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -24,6 +25,8 @@ import java.util.Optional;
 
 @Component
 public class CameraDetailsServiceImpl implements CameraDetailsService, EventHandler {
+    private static final Logger logger = Logger.getLogger(CameraDetailsServiceImpl.class);
+
     private Class handledType;
     private CameraDetailsServiceProxyAdapter proxyAdapter;
     private CameraDetailsCache cameraDetailsCache;
@@ -42,12 +45,18 @@ public class CameraDetailsServiceImpl implements CameraDetailsService, EventHand
     @PostConstruct
     private void registerToDispatcher() {
         eventDispatcherService.addHandler(this);
+        logger.info("CameraDetailsService registered with EventDispatcher");
     }
 
     @Override
     public CameraDetail findCamera(int cameraId) {
         Optional<CameraDetail> cached = cameraDetailsCache.findCamera(cameraId);
         return cached.orElseGet(() -> mapper.map(proxyAdapter.get(cameraId)));
+    }
+
+    @Override
+    public CameraDetail findPreviousCamera(int cameraId) {
+        return null;
     }
 
     @Override

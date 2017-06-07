@@ -13,4 +13,6 @@ public interface CameraDetailsCache {
     Optional<CameraDetail> findPreviousCamera(int cameraId);
     void addCamera(CameraDetail cameraDetail);
     void clear();
+
+    void setIntervalMinutes(int i);
 }

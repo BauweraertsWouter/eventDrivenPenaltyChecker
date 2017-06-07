@@ -5,6 +5,7 @@ import be.kdg.se.wbw.examenproject.penaltyChecker.domain.services.api.CameraDeta
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -13,6 +14,7 @@ import java.util.Optional;
 public class CameraDetailsCacheImpl implements CameraDetailsCache {
     private static final Logger logger = Logger.getLogger(CameraDetailsCacheImpl.class);
     private List<CameraDetail> cameras = new ArrayList<>();
+    private int interval;
 
     @Override
     public Optional<CameraDetail> findCamera(int cameraId) {
@@ -40,7 +42,15 @@ public class CameraDetailsCacheImpl implements CameraDetailsCache {
 
     @Override
     public void clear() {
-        cameras.clear();
-        logger.info("Scheduled task completed: Cache clearen");
+        LocalDateTime edge = LocalDateTime.now().minusMinutes(interval);
+        cameras.stream()
+                .filter(c->c.getRetrievingTimestamp().isBefore(edge))
+                .forEach(c->cameras.remove(c));
+        logger.info("Scheduled task completed: Cache cleanup");
+    }
+
+    @Override
+    public void setIntervalMinutes(int interval) {
+        this.interval = interval;
     }
 }

@@ -4,4 +4,5 @@ import be.kdg.se.wbw.examenproject.penaltyChecker.domain.models.cameraDetail.Cam
 
 public interface CameraDetailsService {
     CameraDetail findCamera(int cameraId);
+    CameraDetail findPreviousCamera(int cameraId);
 }
